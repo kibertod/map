@@ -3,7 +3,7 @@ import sys
 from PyQt5 import uic
 from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
 
 
 class MyWidget(QMainWindow):
@@ -16,7 +16,6 @@ class MyWidget(QMainWindow):
         payload = QtCore.QByteArray(image_data)
         pixmap = QPixmap()
         pixmap.loadFromData(payload, "PNG")
-        self.map_visualisation.setPixmap(pixmap)
 
     def set_image_file(self, image):
         pixmap = QPixmap(image)

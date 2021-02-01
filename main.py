@@ -1,7 +1,7 @@
 import sys
 
 from uic_loader import MyWidget
-import map
+from map import Map
 
 from PyQt5.QtWidgets import QApplication
 
@@ -9,8 +9,14 @@ from PyQt5.QtWidgets import QApplication
 def main():
     app = QApplication(sys.argv)
     ex = MyWidget()
-    # print(map.test())
-    ex.set_image(map.test())
+
+    map = Map(['37.620070', '55.753630'], [450, 450], "map")
+
+    with open("map.jpg", "wb") as file:
+    	file.write(map.load())
+
+
+    ex.set_image_file("map.jpg")
     ex.show()
     sys.exit(app.exec_())
 

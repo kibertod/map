@@ -1,4 +1,4 @@
-from requests import get
+from urllib.request import urlopen
 
 
 class Map:
@@ -9,11 +9,11 @@ class Map:
 
 
 	def load(self):
-		res =   get(
+		res =   urlopen(
 					f"https://static-maps.yandex.ru/1.x/?ll={','.join(self.cords)}&size={','.join(self.size)}&l={self.layer}"
-				).text
-		return res
+				).read()
+		return 	res
 			
 
 def test():
-	return Map(['37.620070', '55.753630'], [450, 450], "sat").load()
+	return Map(['37.620070', '55.753630'], [450, 450], "map").load()
