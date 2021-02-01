@@ -23,8 +23,12 @@ class Map:
 			if kwargs["zoom"] in range(24):
 				self.zoom = kwargs["zoom"]
 		if "cords" in kwargs:
-			self.cords = kwargs["cords"]
-			
+			if -90 < kwargs["cords"][1] < 90 and -180 < kwargs["cords"][0] < 180:
+				self.cords = kwargs["cords"]
+			elif -180 > kwargs["cords"][0]:
+				self.cords = [360 + kwargs["cords"][0], kwargs["cords"][1]]
+			elif 180 < kwargs["cords"][0]:
+				self.cords = [kwargs["cords"][0] - 360, kwargs["cords"][1]]
 
 def test():
 	return Map([37.620070, 55.753630], [450, 450], "map").load()
