@@ -1,7 +1,7 @@
 import sys
 
 from PyQt5 import uic
-from PyQt5.QtCore import QByteArray
+from PyQt5 import QtCore
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
@@ -12,9 +12,9 @@ class MyWidget(QMainWindow):
         uic.loadUi('data/main.ui', self)
 
     def set_image(self, image_data):
-        payload = QByteArray(image_data)
+        payload = QtCore.QByteArray(image_data)
         pixmap = QPixmap()
-        pixmap.loadFromData(payload)
+        pixmap.loadFromData(payload, "PNG")
         self.map_visualisation.setPixmap(pixmap)
 
 
