@@ -35,6 +35,27 @@ class MyWidget(QMainWindow):
             self.map.update(zoom=self.map.zoom - 1)
             self.set_image_file(self.map.load())
 
+        elif event.key() == Qt.Key_Left:
+            self.map.update(cords=[self.map.cords[0] - 0.000001 * (10 ** (6 - self.map.zoom // 4)),
+                                   self.map.cords[1]])
+            self.set_image_file(self.map.load())
+
+        elif event.key() == Qt.Key_Right:
+            self.map.update(cords=[self.map.cords[0] + 0.000001 * (10 ** (6 - self.map.zoom // 4)),
+                                   self.map.cords[1]])
+            self.set_image_file(self.map.load())
+
+        elif event.key() == Qt.Key_Up:
+            self.map.update(cords=[self.map.cords[0],
+                                   self.map.cords[1] + 0.000001 * (10 ** (6 - self.map.zoom // 4))])
+            self.set_image_file(self.map.load())
+
+        elif event.key() == Qt.Key_Down:
+            self.map.update(cords=[self.map.cords[0],
+                                   self.map.cords[1] - 0.000001 * (10 ** (6 - self.map.zoom // 4))])
+            self.set_image_file(self.map.load())
+
+
 
 
 if __name__ == '__main__':
