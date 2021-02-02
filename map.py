@@ -29,6 +29,8 @@ class Map:
 				self.cords = [360 + kwargs["cords"][0], kwargs["cords"][1]]
 			elif 180 < kwargs["cords"][0]:
 				self.cords = [kwargs["cords"][0] - 360, kwargs["cords"][1]]
+		if "layer" in kwargs:
+			self.layer = kwargs['layer']
 
 def test():
 	return Map([37.620070, 55.753630], [450, 450], "map").load()

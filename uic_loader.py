@@ -4,16 +4,25 @@ from PyQt5 import uic
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QCheckBox
 
 
 class MyWidget(QMainWindow):
     # map_visualisation - это QLabel для отрисовки QPixmap
-    def __init__(self, map):
+    def __init__(self):
         super().__init__()
         uic.loadUi('data/main.ui', self)
-        self.set_image(map.load())
-        self.map = map
+        self.map = None
+        self.map_type = 'Схема'
+
+        self.cb1.setEnabled(False)
+        self.cb1.clicked.connect(self.map_type_changed)
+        self.cb2.clicked.connect(self.map_type_changed)
+        self.cb3.clicked.connect(self.map_type_changed)
+
+    def set_map(self, map_obj):
+        self.map = map_obj
+        self.set_image(self.map.load())
 
     def set_image(self, image_data):
         pixmap = QPixmap()
@@ -56,7 +65,46 @@ class MyWidget(QMainWindow):
                                    self.map.cords[1] - 0.00001 * (10 ** (6 - self.map.zoom // 4))])
             self.set_image(self.map.load())
 
+    def map_type_changed(self, state):
+        sender_name = self.sender().text()
+        if str(sender_name) == self.cb1.text():
+            if self.cb2.isChecked():
+                self.cb2.toggle()
+                self.cb2.setEnabled(True)
+            if self.cb3.isChecked():
+                self.cb3.toggle()
+                self.cb3.setEnabled(True)
+            self.cb1.setEnabled(False)
 
+        if str(sender_name) == self.cb2.text():
+            if self.cb1.isChecked():
+                self.cb1.toggle()
+                self.cb1.setEnabled(True)
+            if self.cb3.isChecked():
+                self.cb3.toggle()
+                self.cb3.setEnabled(True)
+            self.cb2.setEnabled(False)
+
+        if str(sender_name) == self.cb3.text():
+            if self.cb1.isChecked():
+                self.cb1.toggle()
+                self.cb1.setEnabled(True)
+            if self.cb2.isChecked():
+                self.cb2.toggle()
+                self.cb2.setEnabled(True)
+            self.cb3.setEnabled(False)
+
+        self.map_type = sender_name
+        self.map.update(layer=self.get_map_type())
+        self.set_image(self.map.load())
+
+    def get_map_type(self):
+        if self.map_type == 'Схема':
+            return 'map'
+        elif self.map_type == 'Спутник':
+            return 'sat'
+        elif self.map_type == 'Гибрид':
+            return 'sat,skl'
 
 
 if __name__ == '__main__':
