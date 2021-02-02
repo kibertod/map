@@ -39,31 +39,26 @@ class MyWidget(QMainWindow):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageUp:
             self.map.update(zoom=self.map.zoom + 1)
-            self.set_image(self.map.load())
         
         elif event.key() == Qt.Key_PageDown:
             self.map.update(zoom=self.map.zoom - 1)
-            self.set_image(self.map.load())
 
         elif event.key() == Qt.Key_Left:
             self.map.update(cords=[self.map.cords[0] - 0.00001 * (10 ** (6 - self.map.zoom // 4)),
                                    self.map.cords[1]])
-            self.set_image(self.map.load())
 
         elif event.key() == Qt.Key_Right:
             self.map.update(cords=[self.map.cords[0] + 0.00001 * (10 ** (6 - self.map.zoom // 4)),
                                    self.map.cords[1]])
-            self.set_image(self.map.load())
 
         elif event.key() == Qt.Key_Up:
             self.map.update(cords=[self.map.cords[0],
                                    self.map.cords[1] + 0.00001 * (10 ** (6 - self.map.zoom // 4))])
-            self.set_image(self.map.load())
 
         elif event.key() == Qt.Key_Down:
             self.map.update(cords=[self.map.cords[0],
                                    self.map.cords[1] - 0.00001 * (10 ** (6 - self.map.zoom // 4))])
-            self.set_image(self.map.load())
+        self.update_map()
 
     def map_type_changed(self, state):
         sender_name = self.sender().text()
@@ -96,7 +91,7 @@ class MyWidget(QMainWindow):
 
         self.map_type = sender_name
         self.map.update(layer=self.get_map_type())
-        self.set_image(self.map.load())
+        self.update_map()
 
     def get_map_type(self):
         if self.map_type == 'Схема':
@@ -105,6 +100,12 @@ class MyWidget(QMainWindow):
             return 'sat'
         elif self.map_type == 'Гибрид':
             return 'sat,skl'
+
+    def update_map(self):
+        # try:
+        self.set_image(self.map.load())
+        # except Exception:
+        #     pass
 
 
 if __name__ == '__main__':
