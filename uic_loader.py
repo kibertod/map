@@ -14,11 +14,13 @@ class MyWidget(QMainWindow):
         uic.loadUi('data/main.ui', self)
         self.map = None
         self.map_type = 'Схема'
+        self.coords = None, None
 
         self.cb1.setEnabled(False)
         self.cb1.clicked.connect(self.map_type_changed)
         self.cb2.clicked.connect(self.map_type_changed)
         self.cb3.clicked.connect(self.map_type_changed)
+        self.search_btn.clicked.connect(self.find_address)
 
     def set_map(self, map_obj):
         self.map = map_obj
@@ -106,6 +108,13 @@ class MyWidget(QMainWindow):
         self.set_image(self.map.load())
         # except Exception:
         #     pass
+
+    def find_address(self):
+        address = self.search_str.text()
+        self.coords = tuple(map(float, self.map.find(address).split()))
+        self.map.update(cords=self.coords)
+        self.map.point_func(self.coords)
+        self.update_map()
 
 
 if __name__ == '__main__':

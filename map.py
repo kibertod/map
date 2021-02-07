@@ -1,4 +1,5 @@
 from urllib.request import urlopen
+import requests
 
 
 class Map:
@@ -8,16 +9,14 @@ class Map:
 		self.layer = layer
 		self.zoom = zoom
 
-
 	def load(self):
-		print(self.zoom)
 		url = "https://static-maps.yandex.ru/1.x/?"
 		url += f"ll={','.join(list(map(str, self.cords)))}"
 		url += f"&size={','.join(list(map(str, self.size)))}"
 		url += f"&l={self.layer}"
 		url += f"&z={self.zoom}"
 		res = urlopen(url).read()
-		return 	res
+		return res
 
 	def update(self, **kwargs):
 		if "zoom" in kwargs:
@@ -37,6 +36,17 @@ class Map:
 			self.layer = kwargs['layer']
 			if self.layer == 'sat' and self.zoom not in range(20):
 				self.zoom = 19
+
+	def find(self, address_name):
+		response = requests.get('https://geocode-maps.yandex.ru/1.x/?geocode={}'
+								'&apikey=40d1649f-0493-4b70-98ba-98533de7710b&format=json'.format(address_name))
+		json_responce = response.json()
+		return json_responce['response']['GeoObjectCollection']['featureMember'][0]['GeoObject']['Point']['pos']
+
+	def point_func(self, cords):
+		pass
+
+
 
 def test():
 	return Map([37.620070, 55.753630], [450, 450], "map").load()
