@@ -46,6 +46,9 @@ class Map:
 	def point_func(self, cords):
 		pass
 
+	def clear_point_func(self):
+		pass
+
 
 
 def test():

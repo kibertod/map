@@ -21,6 +21,7 @@ class MyWidget(QMainWindow):
         self.cb2.clicked.connect(self.map_type_changed)
         self.cb3.clicked.connect(self.map_type_changed)
         self.search_btn.clicked.connect(self.find_address)
+        # self.clr_btn
 
     def set_map(self, map_obj):
         self.map = map_obj
@@ -115,6 +116,9 @@ class MyWidget(QMainWindow):
         self.map.update(cords=self.coords)
         self.map.point_func(self.coords)
         self.update_map()
+
+    def clear_points(self):
+        self.map.clear_points_func()
 
 
 if __name__ == '__main__':

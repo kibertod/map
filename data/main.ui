@@ -115,6 +115,22 @@
     <string>Искать</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="clr_btn">
+   <property name="geometry">
+    <rect>
+     <x>335</x>
+     <y>510</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::ClickFocus</enum>
+   </property>
+   <property name="text">
+    <string>Сброс</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
